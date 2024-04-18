@@ -9,9 +9,10 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { StudentEntity } from './student.entity';
-import { InstuctorEntity } from './intstructor.entity';
+import { InstructorEntity } from './intstructor.entity';
 import { DepartmentEntity } from './department.entity';
 import { IsNotEmpty } from 'class-validator';
+import { ContentType } from 'src/common/type/content.type';
 
 @Entity()
 export class CourseEntity {
@@ -26,12 +27,15 @@ export class CourseEntity {
   @IsNotEmpty()
   description: string;
 
-  @ManyToOne(() => StudentEntity, (student) => student.couseres)
+  @Column({ type: 'json', nullable: true })
+  content: ContentType[];
+
+  @ManyToOne(() => StudentEntity, (student) => student.courses)
   student: StudentEntity;
 
-  @ManyToOne(() => InstuctorEntity, (instructor) => instructor.course)
+  @ManyToOne(() => InstructorEntity, (instructor) => instructor.course)
   @JoinColumn()
-  instructor: InstuctorEntity;
+  instructor: InstructorEntity;
 
   @ManyToOne(() => DepartmentEntity, (department) => department.course)
   @JoinTable()

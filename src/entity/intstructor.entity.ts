@@ -1,8 +1,15 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { CourseEntity } from './course.entity';
 
 @Entity()
-export class InstuctorEntity {
+export class InstructorEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -11,4 +18,10 @@ export class InstuctorEntity {
 
   @OneToMany(() => CourseEntity, (course) => course.instructor)
   course: CourseEntity[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

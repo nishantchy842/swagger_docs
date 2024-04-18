@@ -32,7 +32,7 @@ export class CreateCourseDto {
   })
   @IsOptional()
   @IsNotEmpty()
-  readonly instructorId: number;
+  readonly instructor: number;
 
   @ApiProperty({
     example: 'course description',

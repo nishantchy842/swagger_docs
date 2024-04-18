@@ -1,4 +1,11 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { CourseEntity } from './course.entity';
 
 @Entity()
@@ -13,5 +20,11 @@ export class StudentEntity {
   email: string;
 
   @OneToMany(() => CourseEntity, (course) => course.student)
-  couseres: CourseEntity[];
+  courses: CourseEntity[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
