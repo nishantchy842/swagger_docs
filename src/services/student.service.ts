@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationEnum } from 'src/common/enum/pagination';
+import { StudentCreateSchema } from 'src/common/joiSchema/student.schema';
 import { PageOptionsDto } from 'src/common/pagination/page-option.dto';
 import { PageDto } from 'src/common/pagination/page.dto';
 import { CreateType } from 'src/common/type/createType';
@@ -17,7 +18,14 @@ export class StudentServices {
   /** _--------------------------------create ---------------------------------------- */
 
   async create(payload): Promise<CreateType<StudentEntity>> {
-    const res = await this.studentRepo.save(payload);
+    const { value, error } = await StudentCreateSchema.validate(payload);
+
+    console.log(value, error);
+
+    if (error) {
+      throw new Error(error.details[0].message);
+    }
+    const res = await this.studentRepo.save(value);
 
     return {
       message: 'created successfully',
